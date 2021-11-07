@@ -1,58 +1,152 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+    <div class="container">
+      <div class="item">
+        <div class="number">{{ days }}</div>
+        <div class="label">{{ daysLab }}</div>
+      </div>
+      <div class="item">
+        <div class="number">{{ hours }}</div>
+        <div class="label">{{ hoursLab }}</div>
+      </div>
+      <div class="item">
+        <div class="number">{{ minutes }}</div>
+        <div class="label">{{ minutesLab }}</div>
+      </div>
+      <div class="item">
+        <div class="number">{{ seconds }}</div>
+        <div class="label">{{ secondsLab }}</div>
+      </div>
+    </div>
+    <button @click="setDateToOrlando" class="myButton">From Orlando</button>
+    <button @click="setDateToForli" class="myButton">From Forlì</button>
   </div>
 </template>
 
 <script>
+import { differenceInSeconds } from "date-fns";
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  }
-}
+  name: "HelloWorld",
+  data() {
+    return {
+      interval: null,
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+      daysLab: "Giorni",
+      hoursLab: "Ore",
+      minutesLab: "Minuti",
+      secondsLab: "Secondi",
+      finish: "",
+    };
+  },
+  created() {
+    this.finish = new Date(2021, 11, 7, 16, 20, 0, 0);
+  },
+  mounted() {
+    setInterval(() => {
+      this.interval = differenceInSeconds(this.finish, new Date());
+
+      this.days = Math.floor(this.interval / 86400);
+      this.hours = Math.floor((this.interval - this.days * 86400) / 3600);
+      this.minutes = Math.floor(
+        (this.interval - this.days * 86400 - this.hours * 3600) / 60
+      );
+      this.seconds = Math.floor(
+        this.interval -
+          this.days * 86400 -
+          this.hours * 3600 -
+          this.minutes * 60
+      );
+    }, 1000);
+  },
+  methods: {
+    setDateToOrlando() {
+      this.finish = new Date(2021, 11, 7, 10, 20, 0, 0);
+    },
+    setDateToForli() {
+      this.finish = new Date(2021, 11, 7, 16, 20, 0, 0);
+    },
+  },
+};
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
+  width: 100vw;
+  min-height: 100vh;
+  height: auto;
+  font-family: "Bebas Neue", cursive;
+  background: url("../assets/noidue.jpg");
+  background-position: center;
+  background-size: cover;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+
+.item {
+  padding: 5rem;
+  align-self: center;
+  min-width: 200px;
+  flex-grow: 2;
+  color: white;
+  text-shadow: 0 0 2px #fff;
 }
-li {
+
+.number,
+.label {
+  display: grid;
+  place-items: center;
+}
+
+.number {
+  font-size: 10rem;
+}
+
+.label {
+  font-size: 5rem;
+}
+
+.myButton {
+  width: 50%;
+  box-shadow: inset 0px 1px 0px 0px #ffffff;
+  background-color: #ededed;
+  border-radius: 6px;
+  border: 1px solid #dcdcdc;
   display: inline-block;
-  margin: 0 10px;
+  cursor: pointer;
+  color: #777777;
+  font-family: Arial;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 6px 24px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #ffffff;
 }
-a {
-  color: #42b983;
+.myButton:hover {
+  background-color: #dfdfdf;
+}
+.myButton:active {
+  position: relative;
+  top: 1px;
+}
+
+@media only screen and (max-width: 414px) {
+  .item {
+    padding: 0px;
+    min-width: 0px;
+  }
+
+  .number {
+    font-size: 5rem;
+  }
+
+  .label {
+    font-size: 2rem;
+  }
 }
 </style>
