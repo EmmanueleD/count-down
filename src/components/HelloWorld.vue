@@ -18,8 +18,10 @@
         <div class="label">{{ secondsLab }}</div>
       </div>
     </div>
-    <button @click="setDateToOrlando" class="myButton">From Orlando</button>
-    <button @click="setDateToForli" class="myButton">From Forlì</button>
+    <div class="links">
+      <router-link tag="li" class="nav-link" to="/">From Orlando</router-link>
+      <router-link tag="li" class="nav-link" to="/or">From Forlì</router-link>
+    </div>
   </div>
 </template>
 
@@ -74,18 +76,25 @@ export default {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
-.container {
+.hello {
   display: flex;
-  flex-wrap: wrap;
-  align-items: stretch;
+  flex-direction: column;
   justify-content: center;
-  width: 100vw;
+  align-items: center;
   min-height: 100vh;
-  height: auto;
   font-family: "Bebas Neue", cursive;
+  color: white;
   background: url("../assets/noidue.jpg");
   background-position: center;
   background-size: cover;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100vw;
+  height: auto;
 }
 
 .item {
@@ -93,7 +102,6 @@ export default {
   align-self: center;
   min-width: 200px;
   flex-grow: 2;
-  color: white;
   text-shadow: 0 0 2px #fff;
 }
 
@@ -111,28 +119,21 @@ export default {
   font-size: 5rem;
 }
 
-.myButton {
-  width: 50%;
-  box-shadow: inset 0px 1px 0px 0px #ffffff;
-  background-color: #ededed;
-  border-radius: 6px;
-  border: 1px solid #dcdcdc;
-  display: inline-block;
-  cursor: pointer;
-  color: #777777;
-  font-family: Arial;
-  font-size: 15px;
-  font-weight: bold;
-  padding: 6px 24px;
+.links {
+  width: 30%;
+  display: flex;
+  justify-content: space-around;
+}
+
+a.nav-link {
+  color: white;
+  font-size: 1.5rem;
   text-decoration: none;
-  text-shadow: 0px 1px 0px #ffffff;
 }
-.myButton:hover {
-  background-color: #dfdfdf;
-}
-.myButton:active {
-  position: relative;
-  top: 1px;
+
+a.router-link-active {
+  text-decoration: underline;
+  color: white;
 }
 
 @media only screen and (max-width: 414px) {
