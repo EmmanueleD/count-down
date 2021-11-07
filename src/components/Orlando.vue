@@ -28,7 +28,7 @@
 <script>
 import { differenceInSeconds } from "date-fns";
 export default {
-  name: "HelloWorld",
+  name: "Orlando",
   data() {
     return {
       interval: null,
@@ -46,7 +46,7 @@ export default {
   mounted() {
     setInterval(() => {
       this.interval = differenceInSeconds(
-        new Date(2021, 11, 7, 16, 20, 0, 0),
+        new Date(2021, 11, 7, 10, 20, 0, 0),
         new Date()
       );
 
